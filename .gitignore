@@ -5,7 +5,7 @@
 *.so
 
 # Compiled executables
-user_app
+user_app.out
 
 # Kernel Module files
 *.ko
