@@ -46,6 +46,14 @@ int close_kernel_module(int fd) {
     }
 }
 
+// Function to clean up image path memory
+int clean_up_image_path(char *image_path) {
+    free(image_path);
+    image_path = NULL;
+
+    return 0 ? image_path == NULL : 1;
+}
+
 // Function to process image
 void process_image(int *fd, const char* input_path) {
 
@@ -58,22 +66,37 @@ void process_image(int *fd, const char* input_path) {
         fprintf(stderr, "Please input a valid path\n");
         exit(EXIT_FAILURE);
 
-        // Free memory
-        free(image_path);
+        // cleanup
+        clean_up_image_path(image_path);
 
-        // Set pointer to heap memory to NULL
-        image_path = NULL;
+    }
+    // Check if input_path is too long
+    else if (strlen(input_path) > MAX_PATH) {
+        fprintf(stderr, "Please input a path that is less than %d characters\n", MAX_PATH);
+        exit(EXIT_FAILURE);
+
+        // cleanup
+        clean_up_image_path(image_path);
+
+        }
+
+    // Copy input_path to image_path
+    strcpy(image_path, input_path);
+
+    if (ioctl(*fd, IOCTL_CMD_PROCESS_IMAGE, image_path) < 0) {
+        perror("IOCTL_CMD_PROCESS_IMAGE failed");
+
+        // cleanup
+        clean_up_image_path(image_path);
+
+        exit(EXIT_FAILURE);
     }
     else {
-        printf("Input path is valid\n");
+        printf("IOCTL_CMD_PROCESS_IMAGE successful\n");
 
-        // Check if input_path is a valid iamge file
-
-        
-
-
+        // cleanup
+        clean_up_image_path(image_path);
     }
-
 }
 
 int main (int argc, char *argv[]) {
@@ -89,6 +112,10 @@ int main (int argc, char *argv[]) {
     else {
         printf("You have inputed '%s' as the image path\n", argv[1]);
     }
+
+    // Open kernel module
+    int fd = open_kernel_module(DEVICE_1);
+    
 
 
 
