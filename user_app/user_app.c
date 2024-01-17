@@ -9,6 +9,12 @@
 #include <fcntl.h>
 
 
+#define DEVICE_1 "/dev/kernel_module"
+#define DEVICE_2 "/dev/kernel_module2"
+
+
+
+
 
 
 
