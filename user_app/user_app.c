@@ -18,9 +18,9 @@
 
 
 // Function to open kernel module
-int open_kernel_module(char *device) {
+int open_kernel_module(const char *device_path) {
     int fd;
-    fd = open(device, O_RDWR);
+    fd = open(device_path, O_RDWR);
     if (fd < 0) {
         perror("Failed to open device");
         exit(EXIT_FAILURE);
