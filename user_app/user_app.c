@@ -113,17 +113,36 @@ int main (int argc, char *argv[]) {
         printf("You have inputed '%s' as the image path\n", argv[1]);
     }
 
+    // Check if the file exists before passing it to the kernel module
+    if (access(argv[1], F_OK) == -1) {
+        fprintf(stderr, "File does not exist\n");
+        exit(EXIT_FAILURE);
+    }
+    else {
+        printf("File exists\n");
+    }
+
+
     // Open kernel module
     int fd = open_kernel_module(DEVICE_1);
-    
 
+    // Process image
+    process_image(&fd, argv[1]);
 
+    // Close kernel module
+    close_kernel_module(fd);
 
+    // Open second kernel module
+    fd = open_kernel_module(DEVICE_2);
 
+    // Process image
+    process_image(&fd, argv[1]);
 
+    // Close kernel module
+    close_kernel_module(fd);
 
-
-    
+    return 0;
+        
 }
 
 
