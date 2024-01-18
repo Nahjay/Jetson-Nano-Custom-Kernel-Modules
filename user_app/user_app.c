@@ -36,7 +36,7 @@ int close_kernel_module(int fd) {
     close(fd);
 
     // Check if close was successful
-    if (fd < 0) {
+    if (close(fd) == -1) {
         perror("Failed to close device");
         exit(EXIT_FAILURE);
     }
