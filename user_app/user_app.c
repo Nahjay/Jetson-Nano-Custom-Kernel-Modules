@@ -83,7 +83,7 @@ void process_image(int *fd, const char* input_path) {
     // Copy input_path to image_path
     strcpy(image_path, input_path);
 
-    if (ioctl(*fd, IOCTL_CMD_PROCESS_IMAGE, image_path) < 0) {
+    if (ioctl(*fd, IOCTL_CMD_PROCESS_IMAGE, image_path) == -1) {
         perror("IOCTL_CMD_PROCESS_IMAGE failed");
 
         // cleanup
