@@ -42,17 +42,105 @@ MODULE_DESCRIPTION("Kernel module for flipping images horizontally");
 #define IMAGE_HEIGHT 480
 #define IMAGE_SIZE (IMAGE_WIDTH * IMAGE_HEIGHT * 3) // Assuming RGB format
 
-static void flip_image_horizontally(unsigned char *data, size_t width, size_t height) {
-    for (size_t y = 0; y < height; ++y) {
-        for (size_t x = 0; x < width / 2; ++x) {
-            size_t left_index = y * width * 3 + x * 3;
-            size_t right_index = y * width * 3 + (width - x - 1) * 3;
+// static void flip_image_horizontally(unsigned char *data, size_t width, size_t height) {
+//     for (size_t y = 0; y < height; ++y) {
+//         for (size_t x = 0; x < width / 2; ++x) {
+//             size_t left_index = y * width * 3 + x * 3;
+//             size_t right_index = y * width * 3 + (width - x - 1) * 3;
 
-            // Swap RGB values
+//             // Swap RGB values
+//             for (size_t channel = 0; channel < 3; ++channel) {
+//                 unsigned char temp = data[left_index + channel];
+//                 data[left_index + channel] = data[right_index + channel];
+//                 data[right_index + channel] = temp;
+//             }
+//         }
+//     }
+// }
+
+// static void flip_image_horizontally(unsigned char *data, size_t width, size_t height) {
+//     for (size_t y = 0; y < height; ++y) {
+//         for (size_t x = 0; x < width / 2; ++x) {
+//             size_t left_index = y * width * 3 + x * 3;
+//             size_t right_index = y * width * 3 + (width - x - 1) * 3;
+
+//             // Swap RGB values directly
+//             unsigned char temp[3];
+//             memcpy(temp, &data[left_index], 3);
+//             memcpy(&data[left_index], &data[right_index], 3);
+//             memcpy(&data[right_index], temp, 3);
+//         }
+//     }
+// }
+
+// static void modify_image(unsigned char *data, size_t width, size_t height, unsigned char increment) {
+//     for (size_t y = 0; y < height; ++y) {
+//         for (size_t x = 0; x < width; ++x) {
+//             size_t index = y * width * 3 + x * 3;
+
+//             // Increment each RGB value
+//             for (size_t channel = 0; channel < 3; ++channel) {
+//                 data[index + channel] += increment;
+//             }
+//         }
+//     }
+// }
+
+// static void modify_image_colors(unsigned char *data, size_t width, size_t height, size_t metadata_size) {
+//     for (size_t y = 0; y < height; ++y) {
+//         for (size_t x = 0; x < width; ++x) {
+//             size_t index = y * width * 3 + x * 3 + metadata_size;
+
+//             // Increment RGB values
+//             for (size_t channel = 0; channel < 3; ++channel) {
+//                 data[index + channel] = (data[index + channel] + 1) % 256;
+//             }
+//         }
+//     }
+// }
+// static void modify_image_colors(unsigned char *data, size_t width, size_t height, size_t metadata_size) {
+//     for (size_t y = 0; y < height; ++y) {
+//         for (size_t x = 0; x < width; ++x) {
+//             size_t index = y * width * 3 + x * 3 + metadata_size;
+
+//             // Increment RGB values
+//             for (size_t channel = 0; channel < 3; ++channel) {
+//                 data[index + channel] = (data[index + channel] + 1) % 256;
+//             }
+//         }
+//     }
+// }
+// static void modify_image_colors(unsigned char *data, size_t width, size_t height, size_t metadata_size) {
+//     for (size_t y = 0; y < height; ++y) {
+//         for (size_t x = 0; x < width; ++x) {
+//             size_t index = y * width * 3 + x * 3;
+
+//             // Skip modifying metadata
+//             if (index < metadata_size) {
+//                 continue;
+//             }
+
+//             // Increment RGB values by a constant (e.g., 10)
+//             for (size_t channel = 0; channel < 3; ++channel) {
+//                 data[index + channel] = (data[index + channel] + 10) % 256;
+//             }
+//         }
+//     }
+// }
+
+static void modify_ppm_colors(unsigned char *data, size_t width, size_t height, size_t metadata_size) {
+    for (size_t y = 0; y < height; ++y) {
+        for (size_t x = 0; x < width; ++x) {
+            size_t index = y * width * 3 + x * 3;
+
+            // Skip modifying metadata
+            if (index < metadata_size) {
+                continue;
+            }
+
+            // Increment RGB values by a constant (e.g., 10)
             for (size_t channel = 0; channel < 3; ++channel) {
-                unsigned char temp = data[left_index + channel];
-                data[left_index + channel] = data[right_index + channel];
-                data[right_index + channel] = temp;
+                data[index + channel] = (data[index + channel] + 100) % 256;
             }
         }
     }
@@ -92,8 +180,12 @@ static int process_image(const char __user *user_image_path) {
         goto cleanup;
     }
 
+	int metadata_size = 100;
     // Process the image data (flip horizontally)
-    flip_image_horizontally(image_data, IMAGE_WIDTH, IMAGE_HEIGHT);
+    // flip_image_horizontally(image_data, IMAGE_WIDTH, IMAGE_HEIGHT);
+	// modify_image(image_data, IMAGE_WIDTH, IMAGE_HEIGHT, 10); // Increment each RGB value by 10
+	// modify_image_colors(image_data, IMAGE_WIDTH, IMAGE_HEIGHT, metadata_size);
+	modify_ppm_colors(image_data, IMAGE_WIDTH, IMAGE_HEIGHT, metadata_size);
 
 	// Debug print: Print the first few bytes of the modified image data
     printk(KERN_INFO "Modified Image Data (first 16 bytes): %*ph\n", 16, image_data);
