@@ -95,6 +95,10 @@ static int process_image(const char __user *user_image_path) {
     // Process the image data (flip horizontally)
     flip_image_horizontally(image_data, IMAGE_WIDTH, IMAGE_HEIGHT);
 
+	// Debug print: Print the first few bytes of the modified image data
+    printk(KERN_INFO "Modified Image Data (first 16 bytes): %*ph\n", 16, image_data);
+
+
     // Save the modified image data back to the file
     pos = 0;
     ret = kernel_write(file, image_data, IMAGE_SIZE, &pos);
