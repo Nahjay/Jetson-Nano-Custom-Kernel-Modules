@@ -12,8 +12,8 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Your Name");
 MODULE_DESCRIPTION("Kernel module for flipping images horizontally");
 
-#define IMAGE_WIDTH 640
-#define IMAGE_HEIGHT 480
+#define IMAGE_WIDTH 1280
+#define IMAGE_HEIGHT 853
 #define IMAGE_SIZE (IMAGE_WIDTH * IMAGE_HEIGHT * 3) // Assuming RGB format
 
 static void modify_ppm_colors(unsigned char *data, size_t width, size_t height, size_t metadata_size) {
