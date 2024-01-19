@@ -132,6 +132,9 @@ int main (int argc, char *argv[]) {
     // Close kernel module
     close_kernel_module(fd);
 
+    // Update user
+    printf("User app finished for first kernel module.\n");
+
     // // Open second kernel module
     // fd = open_kernel_module(DEVICE_2);
 
