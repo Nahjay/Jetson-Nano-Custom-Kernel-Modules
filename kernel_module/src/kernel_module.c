@@ -87,6 +87,11 @@ static int process_image(const char __user *user_image_path) {
 cleanup:
     // Cleanup
     kfree(image_data);
+
+	// Set image_data to NULL to avoid double free
+	image_data = NULL;
+
+	// Close the file
     filp_close(file, NULL);
 
     return ret;
