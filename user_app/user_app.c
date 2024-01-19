@@ -11,7 +11,7 @@
 
 
 
-#define DEVICE_1 "/dev/kernel_module"
+#define DEVICE_1 "/dev/flip_image_kernel_module"
 #define DEVICE_2 "/dev/kernel_module_2"
 #define MAX_PATH 256
 #define IOCTL_CMD_PROCESS_IMAGE _IOWR('k', 1, char *)
@@ -33,7 +33,7 @@ int open_kernel_module(const char *device_path) {
 
 // Function to close kernel module
 int close_kernel_module(int fd) {
-    close(fd);
+    // close(fd);
 
     // Check if close was successful
     if (close(fd) == -1) {
@@ -132,14 +132,14 @@ int main (int argc, char *argv[]) {
     // Close kernel module
     close_kernel_module(fd);
 
-    // Open second kernel module
-    fd = open_kernel_module(DEVICE_2);
+    // // Open second kernel module
+    // fd = open_kernel_module(DEVICE_2);
 
-    // Process image
-    process_image(&fd, argv[1]);
+    // // Process image
+    // process_image(&fd, argv[1]);
 
-    // Close kernel module
-    close_kernel_module(fd);
+    // // Close kernel module
+    // close_kernel_module(fd);
 
     return 0;
         
