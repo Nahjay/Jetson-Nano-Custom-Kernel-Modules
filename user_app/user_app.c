@@ -11,7 +11,7 @@
 
 
 
-#define DEVICE_1 "/dev/flip_image_kernel_module"
+#define DEVICE_1 "/dev/modify_ppm_colors_cpu"
 #define DEVICE_2 "/dev/kernel_module_2"
 #define MAX_PATH 256
 #define IOCTL_CMD_PROCESS_IMAGE _IOWR('k', 1, char *)

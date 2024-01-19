@@ -108,7 +108,7 @@ static const struct file_operations fops = {
 
 static struct miscdevice modify_image_misc_device = {
     .minor = MISC_DYNAMIC_MINOR,
-    .name = "modify_ppm_colors",
+    .name = "modify_ppm_colors_cpu",
     .fops = &fops,
 };
 
