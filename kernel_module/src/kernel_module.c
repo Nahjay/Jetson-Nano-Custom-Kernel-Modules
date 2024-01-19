@@ -9,8 +9,8 @@
 #define METADATA 100
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Your Name");
-MODULE_DESCRIPTION("Kernel module for flipping images horizontally");
+MODULE_AUTHOR("Nahjay Battieste");
+MODULE_DESCRIPTION("Kernel module for changing the colors of a PPM image");
 
 #define IMAGE_WIDTH 1280
 #define IMAGE_HEIGHT 853
