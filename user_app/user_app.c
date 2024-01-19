@@ -51,7 +51,7 @@ int clean_up_image_path(char *image_path) {
     free(image_path);
     image_path = NULL;
 
-    return 0 ? image_path == NULL : 1;
+    return 0 ? image_path == NULL : -1;
 }
 
 // Function to process image
