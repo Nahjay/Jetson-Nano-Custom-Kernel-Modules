@@ -82,7 +82,7 @@ static int process_image(const char __user *user_image_path) {
         goto cleanup;
     }
 
-    printk(KERN_INFO "Image flipped successfully\n");
+    printk(KERN_INFO "Image rgb modified successfully\n");
 
 cleanup:
     // Cleanup
@@ -106,25 +106,25 @@ static const struct file_operations fops = {
     .unlocked_ioctl = ioctl_handler,
 };
 
-static struct miscdevice flip_image_misc_device = {
+static struct miscdevice modify_image_misc_device = {
     .minor = MISC_DYNAMIC_MINOR,
-    .name = "flip_image_kernel_module",
+    .name = "modify_ppm_colors",
     .fops = &fops,
 };
 
-static int __init flip_image_module_init(void) {
-    int ret = misc_register(&flip_image_misc_device);
+static int __init modify_image_module_init(void) {
+    int ret = misc_register(&modify_image_misc_device);
     if (ret) {
         pr_err("Failed to register misc device\n");
         return ret;
     }
-    pr_info("Flip image kernel module loaded\n");
+    pr_info("modify ppm colors kernel module loaded\n");
     return 0;
 }
 
-static void __exit flip_image_module_exit(void) {
-    misc_deregister(&flip_image_misc_device);
-    pr_info("Flip image kernel module unloaded\n");
+static void __exit modify_image_module_exit(void) {
+    misc_deregister(&modify_image_misc_device);
+    pr_info("modify ppm colors kernel module unloaded\n");
 }
-module_init(flip_image_module_init);
-module_exit(flip_image_module_exit);
+module_init(modify_image_module_init);
+module_exit(modify_image_module_exit);
