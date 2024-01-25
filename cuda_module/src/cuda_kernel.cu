@@ -16,7 +16,9 @@ __global__ void cuda_kernel(unsigned char *data, size_t width, size_t height, si
     if (index < width * height * 3) {
 
         // Increment RGB values by 10.
-        *data[index] = (*data[index] + 10) % 256;
+        data[index] = (data[index] + 10) % 256;
+        
+        return;
     }
 }
 
