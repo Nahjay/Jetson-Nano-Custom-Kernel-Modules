@@ -1,10 +1,9 @@
-
-EXTRA_CFLAGS += -I/lib/modules/$(shell uname -r)/build/include
+EXTRA_CFLAGS += -I/usr/src/linux-headers-4.15.0-20-generic/include
 
 obj-m += kernel_module.o
 
 all:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+	make -C /usr/src/linux-headers-4.15.0-20-generic M=$(PWD) modules
 
 clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+	make -C /usr/src/linux-headers-4.15.0-20-generic M=$(PWD) clean
