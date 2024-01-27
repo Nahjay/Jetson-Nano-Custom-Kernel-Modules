@@ -64,8 +64,13 @@ static int process_image(const char __user *user_image_path) {
         goto cleanup;
     }
 
+    printk(KERN_INFO "Image Data (first 16 bytes): %*ph\n", 16, image_data);
+    
+
     // Read the image data
     ret = kernel_read(file, image_data, IMAGE_SIZE, &pos);
+
+    printk(ret);
     if (ret < 0) {
         printk(KERN_ERR "Failed to read image data from file\n");
         goto cleanup;

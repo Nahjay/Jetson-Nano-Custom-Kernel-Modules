@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
+#include <errno.h>
 #include "user_app.h"
 
 
@@ -85,6 +86,13 @@ void process_image(int *fd, const char* input_path) {
 
     if (ioctl(*fd, IOCTL_CMD_PROCESS_IMAGE, image_path) == -1) {
         perror("IOCTL_CMD_PROCESS_IMAGE failed");
+
+        // Debugging print statements
+        fprintf(stderr, "IOCTL_CMD_PROCESS_IMAGE failed\n");
+        fprintf(stderr, "image_path: %s\n", image_path);
+        fprintf(stderr, "strlen(image_path): %ld\n", strlen(image_path));
+        fprintf(stderr, "sizeof(image_path): %ld\n", sizeof(image_path));
+        fprintf(stderr, "Error: %s", strerror(errno));
 
         // cleanup
         clean_up_image_path(image_path);
