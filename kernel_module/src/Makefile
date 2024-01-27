@@ -1,9 +1,9 @@
-EXTRA_CFLAGS += -I/usr/src/linux-headers-4.15.0-20-generic/include
+EXTRA_CFLAGS += -I/usr/src/linux-headers-4.9.337-tegra-ubuntu18.04_aarch64
 
 obj-m += kernel_module.o
 
 all:
-	make -C /usr/src/linux-headers-4.15.0-20-generic M=$(PWD) modules
+	make -C /usr/src/linux-headers-4.9.337-tegra-ubuntu18.04_aarch64 M=$(PWD) modules
 
 clean:
-	make -C /usr/src/linux-headers-4.15.0-20-generic M=$(PWD) clean
+	make -C /usr/src/linux-headers-4.9.337-tegra-ubuntu18.04_aarch64 M=$(PWD) clean
