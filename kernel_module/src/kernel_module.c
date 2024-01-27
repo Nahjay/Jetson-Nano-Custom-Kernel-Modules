@@ -17,9 +17,9 @@ MODULE_DESCRIPTION("Kernel module for changing the colors of a PPM image");
 #define IMAGE_SIZE (IMAGE_WIDTH * IMAGE_HEIGHT * 3) // Assuming RGB format
 
 static void modify_ppm_colors(unsigned char *data, size_t width, size_t height, size_t metadata_size) {
-    size_t y, x, channel;
-    for (size_t = 0; y < height; ++y) {
-        for (size_t = 0; x < width; ++x) {
+    size_t y, x;
+    for (y = 0; y < height; ++y) {
+        for (x = 0; x < width; ++x) {
             size_t index = y * width * 3 + x * 3;
 
             // Skip modifying metadata
