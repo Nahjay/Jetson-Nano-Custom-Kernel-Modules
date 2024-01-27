@@ -27,8 +27,10 @@ static void modify_ppm_colors(unsigned char *data, size_t width, size_t height, 
                 continue;
             }
 
+            size_t channel;
+
             // Increment RGB values by a constant (e.g., 10)
-            for (size_t channel = 0; channel < 3; ++channel) {
+            for (channel = 0; channel < 3; ++channel) {
                 data[index + channel] = (data[index + channel] + 100) % 256;
             }
         }
