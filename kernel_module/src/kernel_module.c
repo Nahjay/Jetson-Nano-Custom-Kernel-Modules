@@ -68,9 +68,10 @@ static int process_image(const char __user *user_image_path) {
     
 
     // Read the image data
-    ret = kernel_read(file, image_data, IMAGE_SIZE, &pos);
+    // ret = kernel_read(file, image_data, IMAGE_SIZE, &pos);
+    ret = kernel_read(file, pos, image_data, IMAGE_SIZE);
 
-    printk(ret);
+    // printk(ret);
     if (ret < 0) {
         printk(KERN_ERR "Failed to read image data from file\n");
         goto cleanup;
