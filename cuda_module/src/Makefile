@@ -1,31 +1,14 @@
-# Location of the kernel source tree
-KERNEL_SOURCE := /usr/src/linux-headers-$(shell uname -r)
+obj-m += gpu_kernel_module.o
 
-# Path to CUDA toolkit
-CUDA_PATH := /usr/local/cuda
+KERNEL_DIR := /usr/src/linux-headers-4.9.337-tegra-ubuntu18.04_aarch64/kernel-4.9/
+CUDA_DIR := /usr/local/cuda
 
-# Compiler
-CC := $(CROSS_COMPILE)gcc
-HOSTCC := gcc
-
-# Flags
-EXTRA_CFLAGS := -I$(PWD)/include -I$(KERNEL_SOURCE)/include -I$(CUDA_PATH)/include
-EXTRA_LDFLAGS := -L$(CUDA_PATH)/lib64
-
-# Module name
-MODULE_NAME := gpu_kernel_module
-
-# Source files
-MODULE_SRC := gpu_kernel_module.c
-
-# Objects
-obj-m := $(MODULE_NAME).o
-
-# Targets
-all: module
-
-module:
-    $(MAKE) -C $(KERNEL_SOURCE) M=$(PWD) modules
+all:
+    make -C $(KERNEL_DIR) M=$(PWD) modules
+    nvcc -c cuda_kernel.cu -o cuda_kernel.o
+    $(CC) -o gpu_kernel_module.o -c gpu_kernel_module.c
+    $(CC) -o gpu_kernel_module $(obj-m) cuda_kernel.o -L$(CUDA_DIR)/lib64 -lcudart
 
 clean:
-    $(MAKE) -C $(KERNEL_SOURCE) M=$(PWD) clean
+    make -C $(KERNEL_DIR) M=$(PWD) clean
+    rm -f gpu_kernel_module
