@@ -123,7 +123,7 @@ void process_image(int *fd, const char* input_path) {
 // Function to read image data from second file passed in and return it as a char*
 char *read_image_data(const char *image_path) {
     // Open file
-    FILE *file = fopen(image_path, "r");
+    FILE *file = fopen(image_path, "rb");
 
     // Check if file was opened successfully
     if (file == NULL) {
@@ -230,14 +230,14 @@ int main (int argc, char *argv[]) {
     // Update user
     printf("User app finished for first kernel module.\n");
 
-    // Open cuda shared library
-    void *handle = open_cuda_shared_library(argv[2]);
+    // // Open cuda shared library
+    // void *handle = open_cuda_shared_library(argv[2]);
 
-    // Close cuda shared library
-    dlclose(handle);
+    // // Close cuda shared library
+    // dlclose(handle);
 
-    // Update user
-    printf("User app finished for second cuda shared library.\n");   
+    // // Update user
+    // printf("User app finished for second cuda shared library.\n");   
 
     return 0;
         
