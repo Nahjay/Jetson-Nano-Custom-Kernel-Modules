@@ -8,6 +8,7 @@
 #include <linux/slab.h>
 #include <linux/uaccess.h>
 #include <linux/cuda.h>
+#include <linux/cuda_runtime.h>
 
 
 
