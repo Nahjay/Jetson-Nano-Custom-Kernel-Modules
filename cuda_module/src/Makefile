@@ -5,9 +5,8 @@ CUDA_DIR := /usr/local/cuda
 
 all:
 	make -C $(KERNEL_DIR) M=$(PWD) modules
-	$(CUDA_DIR)/bin/nvcc -c -o cuda_kernel.o cuda_kernel.cu
-	$(CC) -o gpu_kernel_module gpu_kernel_module.c cuda_kernel.o -I$(CUDA_DIR)/include -L$(CUDA_DIR)/lib64 -lcudart
+	$(CUDA_DIR)/bin/nvcc -c -o cuda_kernel.o cuda_kernel.cu -I$(CUDA_DIR)/include -L$(CUDA_DIR)/lib64 -lcudart -Xcompiler -fPIC
 
 clean:
 	make -C $(KERNEL_DIR) M=$(PWD) clean
-	rm -f gpu_kernel_module cuda_kernel.o
+	rm -f gpu_kernel_module *.o
