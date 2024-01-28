@@ -9,11 +9,10 @@
 #include <fcntl.h>
 #include <errno.h>
 #include "user_app.h"
-
+#include <dlfcn.h>
 
 
 #define DEVICE_1 "/dev/modify_ppm_colors_cpu"
-#define DEVICE_2 "/dev/kernel_module_2"
 #define MAX_PATH 256
 #define IOCTL_CMD_PROCESS_IMAGE _IOWR('k', 1, char *)
 
@@ -113,12 +112,12 @@ int main (int argc, char *argv[]) {
     printf("User app started\n");
     printf("You have inputed %d arguments\n", argc);
 
-    if (argc != 2) {
-        fprintf(stderr, "Please only input one file name. Usage: %s <image_path>\n", argv[0]);
+    if (argc != 3) {
+        fprintf(stderr, "Please only input two files. Usage: %s <image_path>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
     else {
-        printf("You have inputed '%s' as the image path\n", argv[1]);
+        printf("You have inputed '%s' and '%s' as the image path\n", argv[1], argv[2]);
     }
 
     // Check if the file exists before passing it to the kernel module
@@ -130,8 +129,16 @@ int main (int argc, char *argv[]) {
         printf("File exists\n");
     }
 
+    // Check if the file exists before passing it to the cuda shared library
+    if (access(argv[2], F_OK) == -1) {
+        fprintf(stderr, "File does not exist\n");
+        exit(EXIT_FAILURE);
+    }
+    else {
+        printf("File exists\n");
+    }
 
-    // Open kernel module
+   // Open kernel module
     int fd = open_kernel_module(DEVICE_1);
 
     // Process image
@@ -143,14 +150,7 @@ int main (int argc, char *argv[]) {
     // Update user
     printf("User app finished for first kernel module.\n");
 
-    // // Open second kernel module
-    // fd = open_kernel_module(DEVICE_2);
-
-    // // Process image
-    // process_image(&fd, argv[1]);
-
-    // // Close kernel module
-    // close_kernel_module(fd);
+   
 
     return 0;
         
