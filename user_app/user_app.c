@@ -16,6 +16,20 @@
 #define MAX_PATH 256
 #define IOCTL_CMD_PROCESS_IMAGE _IOWR('k', 1, char *)
 
+// Function to open cuda shared library
+void *open_cuda_shared_library(const char *library_path) {
+    void *handle;
+    handle = dlopen(library_path, RTLD_LAZY);
+    if (!handle) {
+        fprintf(stderr, "%s\n", dlerror());
+        exit(EXIT_FAILURE);
+    }
+    else {
+        printf("Successfully opened cuda shared library\n");
+        return handle;
+    }
+}
+
 
 // Function to open kernel module
 int open_kernel_module(const char *device_path) {
@@ -150,7 +164,14 @@ int main (int argc, char *argv[]) {
     // Update user
     printf("User app finished for first kernel module.\n");
 
-   
+    // Open cuda shared library
+    void *handle = open_cuda_shared_library(argv[2]);
+
+    // Close cuda shared library
+    dlclose(handle);
+
+    // Update user
+    printf("User app finished for second cuda shared library.\n");   
 
     return 0;
         
