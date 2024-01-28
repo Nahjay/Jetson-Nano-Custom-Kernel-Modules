@@ -120,6 +120,46 @@ void process_image(int *fd, const char* input_path) {
     }
 }
 
+// Function to read image data from second file passed in and return it as a char*
+char *read_image_data(const char *image_path) {
+    // Open file
+    FILE *file = fopen(image_path, "r");
+
+    // Check if file was opened successfully
+    if (file == NULL) {
+        fprintf(stderr, "Failed to open file\n");
+        exit(EXIT_FAILURE);
+    }
+    else {
+        printf("Successfully opened file\n");
+    }
+
+    // Get file size
+    fseek(file, 0, SEEK_END);
+    long file_size = ftell(file);
+    rewind(file);
+
+    // Allocate memory for image data
+    char *image_data = (char*) malloc(file_size * sizeof(char));
+
+    // Read image data from file
+    size_t result = fread(image_data, 1, file_size, file);
+
+    // Check if image data was read successfully
+    if (result != file_size) {
+        fprintf(stderr, "Failed to read image data\n");
+        exit(EXIT_FAILURE);
+    }
+    else {
+        printf("Successfully read image data\n");
+    }
+
+    // Close file
+    fclose(file);
+
+    return image_data;
+}
+
 int main (int argc, char *argv[]) {
 
     // Quick error checking to make sure user app is being used correctly
