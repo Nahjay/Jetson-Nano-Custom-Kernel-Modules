@@ -8,8 +8,8 @@ KERNEL_DIR := /usr/src/linux-headers-4.9.337-tegra-ubuntu18.04_aarch64/kernel-4.
 CUDA_DIR := /usr/local/cuda-10.2/targets/aarch64-linux/
 
 all:
-	make -C $(KERNEL_DIR) M=$(PWD) modules
 	/usr/local/cuda-10.2/bin/nvcc -c -o cuda_kernel.o cuda_kernel.cu
+	make -C $(KERNEL_DIR) M=$(PWD) modules
 	$(CC) -o gpu_kernel_module gpu_kernel_module.c cuda_kernel.o -I$(CUDA_DIR)/include -L$(CUDA_DIR)/lib64 -lcudart
 
 clean:
