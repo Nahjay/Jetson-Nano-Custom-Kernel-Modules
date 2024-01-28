@@ -9,7 +9,7 @@ CUDA_DIR := /usr/local/cuda-10.2/targets/aarch64-linux/
 
 all:
 	make -C $(KERNEL_DIR) M=$(PWD) modules
-	$(CUDA_DIR)/bin/nvcc -c -o cuda_kernel.o cuda_kernel.cu
+	/usr/local/cuda-10.2/bin/nvcc -c -o cuda_kernel.o cuda_kernel.cu
 	$(CC) -o gpu_kernel_module gpu_kernel_module.c cuda_kernel.o -I$(CUDA_DIR)/include -L$(CUDA_DIR)/lib64 -lcudart
 
 clean:
