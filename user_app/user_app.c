@@ -126,8 +126,8 @@ int main (int argc, char *argv[]) {
     printf("User app started\n");
     printf("You have inputed %d arguments\n", argc);
 
-    if (argc != 3) {
-        fprintf(stderr, "Please only input two files. Usage: %s <image_path>\n", argv[0]);
+    if (argc != 4) {
+        fprintf(stderr, "Please only input two files, and the path to the cuda shared library. Usage: %s <image_path>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
     else {
