@@ -79,7 +79,7 @@ static long ioctl_handler(struct file *file, unsigned int cmd, unsigned long arg
     }
 
     // Write the modified image data back to the image file
-    ssize_t write_size = kernel_write(image_file, 0, gpu_image_data, IMAGE_SIZE);
+    ssize_t write_size = kernel_write(image_file, 0, IMAGE_SIZE, gpu_image_data);
     if (write_size < 0) {
         cudaFree(gpu_image_data);
         printk(KERN_ERR "Failed to write image file\n");
