@@ -178,7 +178,13 @@ char *read_image_data(const char *image_path) {
     return image_data;
 }
 
-// Function to write image data to file using cuda
+// Function to process image data using Cuda
+void process_image_data(char *image_data) {
+
+
+    // Get the size of the image data
+    size_t image_data_size = sizeof(*image_data);
+}
 
 // Main function
 int main (int argc, char *argv[]) {
