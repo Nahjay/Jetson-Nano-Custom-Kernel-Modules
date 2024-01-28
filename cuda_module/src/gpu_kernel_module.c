@@ -7,7 +7,7 @@
 #include <linux/miscdevice.h>
 #include <linux/slab.h>
 #include <linux/uaccess.h>
-
+#include <linux/cuda.h>
 
 
 
