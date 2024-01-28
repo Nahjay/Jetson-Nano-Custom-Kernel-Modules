@@ -142,6 +142,19 @@ char *read_image_data(const char *image_path) {
     // Allocate memory for image data
     char *image_data = (char*) malloc(file_size * sizeof(char));
 
+    // Check if memory was allocated successfully
+    if (image_data == NULL) {
+        fprintf(stderr, "Failed to allocate memory for image data\n");
+        exit(EXIT_FAILURE);
+
+        // cleanup
+        free(image_data);
+        image_data = NULL;
+    }
+    else {
+        printf("Successfully allocated memory for image data\n");
+    }
+
     // Read image data from file
     size_t result = fread(image_data, 1, file_size, file);
 
@@ -149,6 +162,10 @@ char *read_image_data(const char *image_path) {
     if (result != file_size) {
         fprintf(stderr, "Failed to read image data\n");
         exit(EXIT_FAILURE);
+
+        // cleanup
+        free(image_data);
+        image_data = NULL;
     }
     else {
         printf("Successfully read image data\n");
