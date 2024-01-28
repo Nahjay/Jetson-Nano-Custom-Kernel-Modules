@@ -17,6 +17,7 @@ MODULE_DESCRIPTION("Kernel module for changing the colors of a PPM image using G
 #define IMAGE_WIDTH 1280
 #define IMAGE_HEIGHT 853
 #define MAX_PATH 256
+#define METADATA 100
 #define IMAGE_SIZE (IMAGE_WIDTH * IMAGE_HEIGHT * 3) // Assuming RGB format
 
 // CUDA kernel
