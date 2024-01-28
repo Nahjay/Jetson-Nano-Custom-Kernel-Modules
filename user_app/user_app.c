@@ -152,6 +152,15 @@ int main (int argc, char *argv[]) {
         printf("File exists\n");
     }
 
+    // Check if the path to the cuda shared library is valid
+    if (access(argv[3], F_OK) == -1) {
+        fprintf(stderr, "File does not exist\n");
+        exit(EXIT_FAILURE);
+    }
+    else {
+        printf("File exists\n");
+    }
+
    // Open kernel module
     int fd = open_kernel_module(DEVICE_1);
 
