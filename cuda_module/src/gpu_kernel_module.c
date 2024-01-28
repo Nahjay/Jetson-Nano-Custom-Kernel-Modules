@@ -9,7 +9,7 @@
 #include <linux/slab.h>
 #include <linux/uaccess.h>
 #include <linux/cuda.h>
-#include "/usr/local/cuda/include/cuda_runtime.h"
+#include "cuda_runtime.h"
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Nahjay Battieste");

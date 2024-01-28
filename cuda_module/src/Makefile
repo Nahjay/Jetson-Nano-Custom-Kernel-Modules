@@ -1,10 +1,13 @@
+obj-m += gpu_kernel_module.o
+
 KERNEL_DIR := /usr/src/linux-headers-4.9.337-tegra-ubuntu18.04_aarch64/kernel-4.9/
 CUDA_DIR := /usr/local/cuda
 
-obj-m += gpu_kernel_module.o
-
 all:
 	make -C $(KERNEL_DIR) M=$(PWD) modules
+	$(CUDA_DIR)/bin/nvcc -c -o cuda_kernel.o cuda_kernel.cu
+	$(CC) -o gpu_kernel_module gpu_kernel_module.c cuda_kernel.o -I$(CUDA_DIR)/include -L$(CUDA_DIR)/lib64 -lcudart
 
 clean:
 	make -C $(KERNEL_DIR) M=$(PWD) clean
+	rm -f gpu_kernel_module cuda_kernel.o
