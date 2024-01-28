@@ -10,25 +10,26 @@
 #include <errno.h>
 #include "user_app.h"
 #include <dlfcn.h>
+#include "/usr/local/cuda-10.2/include/cuda_runtime.h"
 
 
 #define DEVICE_1 "/dev/modify_ppm_colors_cpu"
 #define MAX_PATH 256
 #define IOCTL_CMD_PROCESS_IMAGE _IOWR('k', 1, char *)
 
-// Function to open cuda shared library
-void *open_cuda_shared_library(const char *library_path) {
-    void *handle;
-    handle = dlopen(library_path, RTLD_LAZY);
-    if (!handle) {
-        fprintf(stderr, "%s\n", dlerror());
-        exit(EXIT_FAILURE);
-    }
-    else {
-        printf("Successfully opened cuda shared library\n");
-        return handle;
-    }
-}
+// // Function to open cuda shared library
+// void *open_cuda_shared_library(const char *library_path) {
+//     void *handle;
+//     handle = dlopen(library_path, RTLD_LAZY);
+//     if (!handle) {
+//         fprintf(stderr, "%s\n", dlerror());
+//         exit(EXIT_FAILURE);
+//     }
+//     else {
+//         printf("Successfully opened cuda shared library\n");
+//         return handle;
+//     }
+// }
 
 
 // Function to open kernel module
@@ -177,6 +178,9 @@ char *read_image_data(const char *image_path) {
     return image_data;
 }
 
+// Function to write image data to file using cuda
+
+// Main function
 int main (int argc, char *argv[]) {
 
     // Quick error checking to make sure user app is being used correctly
@@ -237,7 +241,15 @@ int main (int argc, char *argv[]) {
     // dlclose(handle);
 
     // // Update user
-    // printf("User app finished for second cuda shared library.\n");   
+    // printf("User app finished for second cuda shared library.\n");  
+
+
+    // Cuda Application Starts Here
+
+    // Obtain image data from file
+    char *image_data = read_image_data(argv[2]); 
+
+
 
     return 0;
         
