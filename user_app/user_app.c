@@ -294,7 +294,11 @@ int main (int argc, char *argv[]) {
     // Obtain image data from file
     char *image_data = read_image_data(argv[2]); 
 
+    // Process image data using Cuda
+    process_image_data(image_data);
 
+    // Update user
+    printf("User app finished for cuda implementation.\n");
 
     return 0;
         
