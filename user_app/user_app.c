@@ -15,6 +15,10 @@
 
 #define DEVICE_1 "/dev/modify_ppm_colors_cpu"
 #define MAX_PATH 256
+#define IMAGE_WIDTH 1280
+#define IMAGE_HEIGHT 853
+#define IMAGE_SIZE (IMAGE_WIDTH * IMAGE_HEIGHT * 3)'
+#define METADATA 100
 #define IOCTL_CMD_PROCESS_IMAGE _IOWR('k', 1, char *)
 
 // // Function to open cuda shared library
@@ -184,6 +188,68 @@ void process_image_data(char *image_data) {
 
     // Get the size of the image data
     size_t image_data_size = sizeof(*image_data);
+
+    // Create pointers to the image data
+    char *d_image_data;
+
+    // Allocate memory for the image data on the device
+    cudaMalloc((void**) &d_image_data, image_data_size);
+
+    // Check if memory was allocated successfully
+    if (d_image_data == NULL) {
+        fprintf(stderr, "Failed to allocate memory for image data on device\n");
+        exit(EXIT_FAILURE);
+
+        // cleanup
+        cudaFree(d_image_data);
+        d_image_data = NULL;
+    }
+    else {
+        printf("Successfully allocated memory for image data on device\n");
+    }
+
+    // Copy image data from host to device
+    cudaMemcpy(d_image_data, image_data, image_data_size, cudaMemcpyHostToDevice);
+
+    // Check if image data was copied successfully
+    if (cudaMemcpy(d_image_data, image_data, image_data_size, cudaMemcpyHostToDevice) != cudaSuccess) {
+        fprintf(stderr, "Failed to copy image data from host to device\n");
+        exit(EXIT_FAILURE);
+
+        // cleanup
+        cudaFree(d_image_data);
+        d_image_data = NULL;
+    }
+    else {
+        printf("Successfully copied image data from host to device\n");
+    }
+
+    // Define grid and block dimensions
+    int blockSize = 256;
+    int gridSize = (image_data_size + blockSize - 1) / blockSize;
+
+    // Launch the CUDA kernel
+    cuda_kernel<<<gridSize, blockSize>>>(d_image_data, IMAGE_WIDTH, IMAGE_HEIGHT, METADATA);
+
+    // Check for kernel launch errors
+    cudaError_t cuda_error = cudaGetLastError();
+    if (cuda_error != cudaSuccess) {
+        fprintf(stderr, "CUDA kernel launch failed: %s\n", cudaGetErrorString(cuda_error));
+        exit(EXIT_FAILURE);
+    }
+
+    // Copy the modified image data back to host memory
+    cudaMemcpy(image_data, d_image_data, image_data_size, cudaMemcpyDeviceToHost);
+
+    // Check if image data was copied back successfully
+    cuda_error = cudaGetLastError();
+    if (cuda_error != cudaSuccess) {
+        fprintf(stderr, "Failed to copy modified image data back to host: %s\n", cudaGetErrorString(cuda_error));
+        exit(EXIT_FAILURE);
+    }
+
+    // Free device memory
+    cudaFree(d_image_data);
 }
 
 // Main function
