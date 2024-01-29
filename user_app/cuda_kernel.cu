@@ -1,7 +1,5 @@
 #include "cuda_kernel.h"
-
 // Updated CUDA kernel function to process image data
-
 __global__ void cuda_kernel(unsigned char *image_data, size_t width, size_t height, size_t metadata_size) {
     // Calculate global index
     int index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -23,3 +21,4 @@ __global__ void cuda_kernel(unsigned char *image_data, size_t width, size_t heig
         image_data[index] = (image_data[index] + 10) % 256;
     }
 }
+
