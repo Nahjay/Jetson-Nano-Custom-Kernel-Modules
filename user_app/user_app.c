@@ -217,7 +217,7 @@ int main (int argc, char *argv[]) {
 
     // Check if cuda function is being called correctly
     printf("Calling cuda function\n");
-    extern void process_image_data(argv);
+    extern int process_image_data(argv);
 
     // Update user
     printf("User app finished for cuda implementation.\n");
