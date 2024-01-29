@@ -11,7 +11,7 @@
 #include "user_app.h"
 #include <dlfcn.h>
 // #include "/usr/local/cuda-10.2/include/cuda_runtime.h"
-// #include "cuda_kernel.h"
+#include "cuda_kernel.h"
 // #include "/usr/local/cuda-10.2/include/cuda.h"
 // #include "/usr/local/cuda-10.2/include/device_launch_parameters.h"
 
@@ -230,6 +230,8 @@ int main (int argc, char *argv[]) {
 
     // Update user
     printf("User app finished for cuda implementation.\n");
+
+    // 
 
     return 0;
         
