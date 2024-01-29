@@ -33,7 +33,7 @@ __global__ void cuda_kernel(char *image_data, size_t width, size_t height, size_
 }
 
 // Function to process image data using Cuda
-extern "C" void process_image_data(char *image_data) {
+extern void process_image_data(char *image_data) {
 
 
     // Get the size of the image data
