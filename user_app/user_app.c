@@ -178,7 +178,7 @@ int main (int argc, char *argv[]) {
     printf("You have inputed %d arguments\n", argc);
 
     if (argc != 3) {
-        fprintf(stderr, "Please only input two image files. Usage: %s <image_path>\n", argv[0]);
+        fprintf(stderr, "Please only input two files. Usage: %s <image_path>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
     else {
@@ -203,7 +203,7 @@ int main (int argc, char *argv[]) {
         printf("File exists\n");
     }
 
-    // Open kernel module
+   // Open kernel module
     int fd = open_kernel_module(DEVICE_1);
 
     // Process image
@@ -223,7 +223,7 @@ int main (int argc, char *argv[]) {
     printf("User app finished for cuda implementation.\n");
 
     // Use cuda
-    // process_image_data(image_data);
+    process_image_data(*image_data);
 
     return 0;
         
