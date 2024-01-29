@@ -3,8 +3,11 @@
 #include "/usr/local/cuda-10.2/include/cuda.h"
 #include "/usr/local/cuda-10.2/include/device_launch_parameters.h"
 
+#define IMAGE_WIDTH 1280
+#define IMAGE_HEIGHT 853
+#define METADATA 100
 // Updated CUDA kernel function to process image data
-__global__ void cuda_kernel(unsigned char *image_data, size_t width, size_t height, size_t metadata_size) {
+__global__ void cuda_kernel(char *image_data, size_t width, size_t height, size_t metadata_size) {
     // Calculate global index
     int index = blockIdx.x * blockDim.x + threadIdx.x;
 
