@@ -31,9 +31,9 @@ __global__ void modify_ppm_colors(unsigned char *data, size_t width, size_t heig
 
         // Skip modifying metadata
         if (index >= metadata_size) {
-            // Increment RGB values by 10
+            // Increment RGB values by 100
             for (int channel = 0; channel < 3; ++channel) {
-                data[index + channel] = (data[index + channel] + 10) % 256;
+                data[index + channel] = (data[index + channel] + 100) % 256;
             }
         }
 
