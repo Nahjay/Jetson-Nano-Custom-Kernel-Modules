@@ -223,7 +223,7 @@ int main (int argc, char *argv[]) {
     printf("User app finished for cuda implementation.\n");
 
     // Use cuda
-    process_image_data(*image_data);
+    process_image_data(image_data);
 
     return 0;
         
