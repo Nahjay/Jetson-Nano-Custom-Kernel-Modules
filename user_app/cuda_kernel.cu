@@ -210,7 +210,7 @@ int process_image_data(char* argv[]) {
     cudaFree(d_data);
 
     // Write back modified data to the file
-    FILE *output_file = fopen(argv[1], "wb");
+    FILE *output_file = fopen(argv[2], "wb");
     if (!output_file) {
         perror("Error opening output file");
         free(data);
