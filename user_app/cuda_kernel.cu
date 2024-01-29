@@ -133,4 +133,8 @@ void process_image_data(char *image_data) {
     else {
         printf("Successfully freed device memory\n");
     }
+
+    // Sync the device
+    cudaDeviceSynchronize();
+ 
 }
