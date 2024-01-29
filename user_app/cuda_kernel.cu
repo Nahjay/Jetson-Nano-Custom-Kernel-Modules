@@ -4,8 +4,6 @@
 #include "/usr/local/cuda-10.2/include/device_launch_parameters.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 
 #define IMAGE_WIDTH 1280
