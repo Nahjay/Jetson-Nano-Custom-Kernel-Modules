@@ -177,8 +177,8 @@ int main (int argc, char *argv[]) {
     printf("User app started\n");
     printf("You have inputed %d arguments\n", argc);
 
-    if (argc != 4) {
-        fprintf(stderr, "Please only input two files, and the path to the cuda shared library. Usage: %s <image_path>\n", argv[0]);
+    if (argc != 3) {
+        fprintf(stderr, "Please only input two image files. Usage: %s <image_path>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
     else {
@@ -203,16 +203,7 @@ int main (int argc, char *argv[]) {
         printf("File exists\n");
     }
 
-    // Check if the path to the cuda shared library is valid
-    if (access(argv[3], F_OK) == -1) {
-        fprintf(stderr, "File does not exist\n");
-        exit(EXIT_FAILURE);
-    }
-    else {
-        printf("File exists\n");
-    }
-
-   // Open kernel module
+    // Open kernel module
     int fd = open_kernel_module(DEVICE_1);
 
     // Process image
