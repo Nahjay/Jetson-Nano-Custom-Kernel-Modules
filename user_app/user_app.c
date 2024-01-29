@@ -13,6 +13,7 @@
 #include "/usr/local/cuda-10.2/include/cuda_runtime.h"
 #include "cuda_kernel.h"
 #include "/usr/local/cuda-10.2/include/cuda.h"
+#include "/usr/local/cuda-10.2/include/device_launch_parameters.h"
 
 
 #define DEVICE_1 "/dev/modify_ppm_colors_cpu"
