@@ -297,7 +297,7 @@ int main (int argc, char *argv[]) {
     char *image_data = read_image_data(argv[2]); 
 
     // Process image data using Cuda
-    process_image_data(image_data);
+    // process_image_data(image_data);
 
     // Update user
     printf("User app finished for cuda implementation.\n");
