@@ -218,12 +218,12 @@ int main (int argc, char *argv[]) {
     // Obtain image data from file
     char *image_data = read_image_data(argv[2]); 
 
+    // Check if cuda function is being called correctly
+    printf("Calling cuda function\n");
+    extern void process_image_data(char *image_data);
 
     // Update user
     printf("User app finished for cuda implementation.\n");
-
-    // Use cuda
-    extern void process_image_data(char *image_data);
 
     return 0;
         

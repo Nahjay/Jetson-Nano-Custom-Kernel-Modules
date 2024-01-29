@@ -4,6 +4,8 @@
 #include "/usr/local/cuda-10.2/include/device_launch_parameters.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 
 #define IMAGE_WIDTH 1280
@@ -89,6 +91,32 @@ void process_image_data(char *image_data) {
 
     // Copy the modified image data back to host memory
     cudaMemcpy(image_data, d_image_data, image_data_size, cudaMemcpyDeviceToHost);
+
+    // // Write the modified image data to a file
+    // FILE *output_file = fopen("output_image.ppm", "wb");
+    // fwrite(image_data, sizeof(char), image_data_size, output_file);
+    // fclose(output_file);
+
+    // Write the modified image data to a file
+    FILE *output_file = fopen("output_image.ppm", "wb");
+    if (output_file == NULL) {
+        fprintf(stderr, "Failed to open output file\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Write the PPM header
+    fprintf(output_file, "P6\n%d %d\n255\n", IMAGE_WIDTH, IMAGE_HEIGHT);
+
+    // Write the image data to the file
+    size_t pixel_count = IMAGE_WIDTH * IMAGE_HEIGHT * 3; // Assuming 3 bytes per pixel (RGB)
+    size_t bytes_written = fwrite(image_data, sizeof(char), pixel_count, output_file);
+    if (bytes_written != pixel_count) {
+        fprintf(stderr, "Error writing image data to file\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Close the file
+    fclose(output_file);
 
     // Check if image data was copied back successfully
     cuda_error = cudaGetLastError();
