@@ -114,61 +114,61 @@ void process_image(int *fd, const char* input_path) {
 }
 
 // Function to read image data from second file passed in and return it as a char*
-char *read_image_data(const char *image_path) {
-    // Open file
-    FILE *file = fopen(image_path, "rb");
+// char *read_image_data(const char *image_path) {
+//     // Open file
+//     FILE *file = fopen(image_path, "rb");
 
-    // Check if file was opened successfully
-    if (file == NULL) {
-        fprintf(stderr, "Failed to open file\n");
-        exit(EXIT_FAILURE);
-    }
-    else {
-        printf("Successfully opened file\n");
-    }
+//     // Check if file was opened successfully
+//     if (file == NULL) {
+//         fprintf(stderr, "Failed to open file\n");
+//         exit(EXIT_FAILURE);
+//     }
+//     else {
+//         printf("Successfully opened file\n");
+//     }
 
-    // Get file size
-    fseek(file, 0, SEEK_END);
-    long file_size = ftell(file);
-    rewind(file);
+//     // Get file size
+//     fseek(file, 0, SEEK_END);
+//     long file_size = ftell(file);
+//     rewind(file);
 
-    // Allocate memory for image data
-    char *image_data = (char*) malloc(file_size * sizeof(char));
+//     // Allocate memory for image data
+//     char *image_data = (char*) malloc(file_size * sizeof(char));
 
-    // Check if memory was allocated successfully
-    if (image_data == NULL) {
-        fprintf(stderr, "Failed to allocate memory for image data\n");
-        exit(EXIT_FAILURE);
+//     // Check if memory was allocated successfully
+//     if (image_data == NULL) {
+//         fprintf(stderr, "Failed to allocate memory for image data\n");
+//         exit(EXIT_FAILURE);
 
-        // cleanup
-        free(image_data);
-        image_data = NULL;
-    }
-    else {
-        printf("Successfully allocated memory for image data\n");
-    }
+//         // cleanup
+//         free(image_data);
+//         image_data = NULL;
+//     }
+//     else {
+//         printf("Successfully allocated memory for image data\n");
+//     }
 
-    // Read image data from file
-    size_t result = fread(image_data, 1, file_size, file);
+//     // Read image data from file
+//     size_t result = fread(image_data, 1, file_size, file);
 
-    // Check if image data was read successfully
-    if (result != file_size) {
-        fprintf(stderr, "Failed to read image data\n");
-        exit(EXIT_FAILURE);
+//     // Check if image data was read successfully
+//     if (result != file_size) {
+//         fprintf(stderr, "Failed to read image data\n");
+//         exit(EXIT_FAILURE);
 
-        // cleanup
-        free(image_data);
-        image_data = NULL;
-    }
-    else {
-        printf("Successfully read image data\n");
-    }
+//         // cleanup
+//         free(image_data);
+//         image_data = NULL;
+//     }
+//     else {
+//         printf("Successfully read image data\n");
+//     }
 
-    // Close file
-    fclose(file);
+//     // Close file
+//     fclose(file);
 
-    return image_data;
-}
+//     return image_data;
+// }
 
 // Main function
 int main (int argc, char *argv[]) {
@@ -215,12 +215,9 @@ int main (int argc, char *argv[]) {
     // Update user
     printf("User app finished for first kernel module.\n");
 
-    // Obtain image data from file
-    char *image_data = read_image_data(argv[2]); 
-
     // Check if cuda function is being called correctly
     printf("Calling cuda function\n");
-    extern void process_image_data(char *image_data);
+    extern void process_image_data(argv);
 
     // Update user
     printf("User app finished for cuda implementation.\n");
