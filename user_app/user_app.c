@@ -217,7 +217,7 @@ void process_image_data(char *image_data) {
     int gridSize = (image_data_size + blockSize - 1) / blockSize;
 
     // Launch the CUDA kernel
-    cuda_kernel <<< gridSize, blockSize >>> (d_image_data, IMAGE_WIDTH, IMAGE_HEIGHT, METADATA);
+    cuda_kernel << gridSize, blockSize >> (d_image_data, IMAGE_WIDTH, IMAGE_HEIGHT, METADATA);
 
     // Check for kernel launch errors
     cudaError_t cuda_error = cudaGetLastError();
