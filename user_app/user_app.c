@@ -11,6 +11,7 @@
 #include "user_app.h"
 #include <dlfcn.h>
 #include "/usr/local/cuda-10.2/include/cuda_runtime.h"
+#include "cuda_kernel.h"
 
 
 #define DEVICE_1 "/dev/modify_ppm_colors_cpu"
