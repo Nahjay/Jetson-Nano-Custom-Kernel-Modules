@@ -1,10 +1,3 @@
-// Create Cuda Kernel for image processing.
-
-// Create global function for image processing.
-
-
-
-
 // Updated CUDA kernel function to process image data
 __global__ void cuda_kernel(unsigned char *image_data, size_t width, size_t height, size_t metadata_size) {
     // Calculate global index
