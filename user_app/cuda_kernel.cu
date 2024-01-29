@@ -99,4 +99,15 @@ void process_image_data(char *image_data) {
 
     // Free device memory
     cudaFree(d_image_data);
+
+    // Check if device memory was freed successfully
+    cuda_error = cudaGetLastError();
+
+    if (cuda_error != cudaSuccess) {
+        fprintf(stderr, "Failed to free device memory: %s\n", cudaGetErrorString(cuda_error));
+        exit(EXIT_FAILURE);
+    }
+    else {
+        printf("Successfully freed device memory\n");
+    }
 }
