@@ -2,6 +2,9 @@
 #include "cuda_kernel.h"
 #include "/usr/local/cuda-10.2/include/cuda.h"
 #include "/usr/local/cuda-10.2/include/device_launch_parameters.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 
 #define IMAGE_WIDTH 1280
 #define IMAGE_HEIGHT 853
