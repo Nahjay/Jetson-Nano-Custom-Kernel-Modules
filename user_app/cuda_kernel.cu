@@ -24,9 +24,6 @@ __global__ void cuda_kernel(char *image_data, size_t width, size_t height, size_
     // Calculate pixel index
     int pixel_index = (index - metadata_size) / 3;
 
-    // Calculate channel index
-    int channel_index = (index - metadata_size) % 3;
-
     // Ensure index is within image data bounds
     if (pixel_index < width * height) {
         // Increment RGB values by 10
