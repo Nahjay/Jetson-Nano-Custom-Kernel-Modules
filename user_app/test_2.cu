@@ -20,6 +20,7 @@
 #define IMAGE_SIZE (IMAGE_WIDTH * IMAGE_HEIGHT * 3)
 #define METADATA 100
 #define IOCTL_CMD_PROCESS_IMAGE _IOWR('k', 1, char *)
+#define BLOCK_SIZE 256
 
 __global__ void modify_ppm_colors(unsigned char *data, size_t width, size_t height, size_t metadata_size) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
@@ -177,7 +178,7 @@ int main (int argc, char *argv[]) {
     // Check if cuda function is being called correctly
     printf("Calling cuda function\n");
 
-    ILE *file = fopen(argv[2], "rb+");
+    FILE *file = fopen(argv[2], "rb+");
     if (!file) {
         perror("Error opening file");
         return 1;
